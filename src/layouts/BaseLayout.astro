@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { languages, otherLang, ui } from '../i18n';
+import type { Lang } from '../data/brands';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** brand slug when on a brand page */
+  current?: string;
+  /** brand accent color; sets --brand/--accent for the page */
+  accent?: string;
+  /** path without language prefix, e.g. "" or "software" (for the language switcher and hreflang) */
+  path?: string;
+}
+const { lang, title, description = ui[lang].tagline, current, accent, path = '' } = Astro.props;
+const { dir } = languages[lang];
+const other = otherLang(lang);
+const site = Astro.site ?? new URL('https://robotandi.com');
+const suffix = path ? `${path}/` : '';
+const self = new URL(`/${lang}/${suffix}`, site).href;
+const alt = new URL(`/${other}/${suffix}`, site).href;
+---
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={self} />
+    <link rel="alternate" hreflang={lang} href={self} />
+    <link rel="alternate" hreflang={other} href={alt} />
+    <link rel="alternate" hreflang="x-default" href={new URL(`/ar/${suffix}`, site).href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body style={accent ? `--brand:${accent};--accent:${accent}` : undefined}>
+    <Header lang={lang} current={current} path={path} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

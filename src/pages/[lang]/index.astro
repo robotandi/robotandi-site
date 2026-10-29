@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { brands } from '../../data/brands';
+import type { Lang } from '../../data/brands';
+import { ui } from '../../i18n';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'ar' } }, { params: { lang: 'en' } }];
+}
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+---
+<BaseLayout lang={lang} title={`${t.siteName} | ${t.tagline}`} path="">
+  <section class="hero">
+    <div class="container">
+      <h1>{t.heroTitle}</h1>
+      <p>{t.heroText}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>{t.ourBrands}</h2>
+      <div class="grid">
+        {brands.map((b) => (
+          <a class="card" href={`/${lang}/${b.slug}/`} style={`--brand:${b.accent}`}>
+            <h3>{b.title[lang]}</h3>
+            <p>{b.summary[lang]}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

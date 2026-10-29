@@ -1,0 +1,30 @@
+---
+import { brands } from '../data/brands';
+import type { Lang } from '../data/brands';
+import { languages, otherLang, ui } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** brand slug of the current page (for the active link), or undefined on the home page */
+  current?: string;
+  /** path of this page without the language prefix, e.g. "" or "software" */
+  path?: string;
+}
+const { lang, current, path = '' } = Astro.props;
+const t = ui[lang];
+const other = otherLang(lang);
+const switchHref = `/${other}/${path ? path + '/' : ''}`;
+---
+<header class="site-header">
+  <div class="container header-row">
+    <a class="wordmark" href={`/${lang}/`} aria-label={t.siteName}>Robot and <span class="dot">I</span></a>
+    <nav class="nav" aria-label="Main">
+      {brands.map((b) => (
+        <a href={`/${lang}/${b.slug}/`} aria-current={current === b.slug ? 'page' : undefined} style={`--brand:${b.accent}`}>
+          {b.name[lang]}
+        </a>
+      ))}
+    </nav>
+    <a class="lang-switch" href={switchHref} lang={other} hreflang={other}>{languages[other].label}</a>
+  </div>
+</header>

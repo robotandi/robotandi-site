@@ -1,0 +1,24 @@
+---
+import { brands } from '../data/brands';
+import type { Lang } from '../data/brands';
+import { ui } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="wordmark" style="color:#fff">Robot and <span class="dot">I</span></div>
+        <p>{t.tagline}</p>
+      </div>
+      <div class="footer-links">
+        {brands.map((b) => <a href={`/${lang}/${b.slug}/`}>{b.name[lang]}</a>)}
+      </div>
+    </div>
+    <div class="copy">© {year} Robot and I. {t.rights}</div>
+  </div>
+</footer>

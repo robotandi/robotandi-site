@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { brands } from '../../data/brands';
+import type { Lang } from '../../data/brands';
+import { ui } from '../../i18n';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const lang of ['ar', 'en']) {
+    for (const brand of brands) {
+      paths.push({ params: { lang, brand: brand.slug }, props: { brand } });
+    }
+  }
+  return paths;
+}
+const lang = Astro.params.lang as Lang;
+const { brand } = Astro.props;
+const t = ui[lang];
+---
+<BaseLayout
+  lang={lang}
+  title={`${brand.title[lang]} | ${t.siteName}`}
+  description={brand.summary[lang]}
+  current={brand.slug}
+  accent={brand.accent}
+  path={brand.slug}
+>
+  <section class="brand-hero">
+    <div class="container">
+      <h1>{brand.title[lang]}</h1>
+      <p>{brand.summary[lang]}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <span class="badge">{t.comingSoon}</span>
+      <p>{t.comingSoonText}</p>
+      <a class="btn outline" href={`/${lang}/`}>{t.back}</a>
+    </div>
+  </section>
+</BaseLayout>

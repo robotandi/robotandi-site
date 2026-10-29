@@ -1,5 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://robotandi.com',
+  i18n: {
+    defaultLocale: 'ar',
+    locales: ['ar', 'en'],
+    routing: { prefixDefaultLocale: true },
+  },
+});

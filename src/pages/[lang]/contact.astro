@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import type { Lang } from '../../data/brands';
+import { ui } from '../../i18n';
+import { CONTACT_EMAIL } from '../../config';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'ar' } }, { params: { lang: 'en' } }];
+}
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+---
+<BaseLayout lang={lang} title={`${t.contactTitle} | ${t.siteName}`} description={t.contactText} current="contact" path="contact">
+  <div class="container page-title"><h1>{t.contactTitle}</h1></div>
+  <section class="section">
+    <div class="container">
+      <div class="form-wrap">
+        <p>{t.contactText}</p>
+        <ContactForm lang={lang} kind="contact" source="general" showTopic />
+        {CONTACT_EMAIL && (
+          <p style="margin-block-start:1.5rem">{t.emailUs} <a href={`mailto:${CONTACT_EMAIL}`} dir="ltr"><strong>{CONTACT_EMAIL}</strong></a></p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

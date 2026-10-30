@@ -1,0 +1,107 @@
+---
+import { brands } from '../data/brands';
+import type { Lang, FormKind } from '../data/brands';
+import { forms, ui } from '../i18n';
+import { FORM_ACCESS_KEY } from '../config';
+
+interface Props {
+  lang: Lang;
+  kind: FormKind;
+  /** brand slug the form belongs to, or "general" */
+  source: string;
+  /** show a topic dropdown (used on the Contact page) */
+  showTopic?: boolean;
+}
+const { lang, kind, source, showTopic = false } = Astro.props;
+const t = ui[lang];
+const f = forms[lang][kind];
+const emailOnly = kind === 'waitlist' || kind === 'follow';
+const needsMessage = !emailOnly;
+const needsPhone = kind === 'quote' || kind === 'contact';
+const subject = `[Robot and I website] ${source} - ${kind} (${lang})`;
+const id = `f-${source}-${kind}`;
+---
+<form
+  class="form"
+  data-form
+  data-sending={t.sending}
+  data-success={f.success}
+  data-error={t.error}
+  novalidate={false}
+>
+  <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value="Robot and I website" />
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="form_type" value={kind} />
+  <input type="hidden" name="language" value={lang} />
+  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  {showTopic && (
+    <label class="field" for={`${id}-topic`}>
+      <span>{t.topic}</span>
+      <select id={`${id}-topic`} name="topic">
+        <option value="general">{t.topicGeneral}</option>
+        {brands.map((b) => <option value={b.slug}>{b.title[lang]}</option>)}
+      </select>
+    </label>
+  )}
+
+  <label class="field" for={`${id}-name`}>
+    <span>{t.name}</span>
+    <input id={`${id}-name`} name="name" type="text" autocomplete="name" required={!emailOnly} />
+  </label>
+
+  <label class="field" for={`${id}-email`}>
+    <span>{t.email}</span>
+    <input id={`${id}-email`} name="email" type="email" autocomplete="email" dir="ltr" required />
+  </label>
+
+  {needsPhone && (
+    <label class="field" for={`${id}-phone`}>
+      <span>{t.phone}</span>
+      <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" dir="ltr" />
+    </label>
+  )}
+
+  {needsMessage && (
+    <label class="field" for={`${id}-message`}>
+      <span>{t.message}</span>
+      <textarea id={`${id}-message`} name="message" rows="5" required></textarea>
+    </label>
+  )}
+
+  <button class="btn" type="submit">{f.submit}</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>('.form-status')!;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const d = form.dataset;
+      status.className = 'form-status';
+      status.textContent = d.sending ?? '';
+      button.disabled = true;
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message);
+        form.reset();
+        status.classList.add('ok');
+        status.textContent = d.success ?? '';
+      } catch {
+        status.classList.add('err');
+        status.textContent = d.error ?? '';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>

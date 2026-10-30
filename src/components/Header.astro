@@ -5,7 +5,7 @@ import { languages, otherLang, ui } from '../i18n';
 
 interface Props {
   lang: Lang;
-  /** brand slug of the current page (for the active link), or undefined on the home page */
+  /** brand slug (or "contact") of the current page, for the active link */
   current?: string;
   /** path of this page without the language prefix, e.g. "" or "software" */
   path?: string;
@@ -24,6 +24,7 @@ const switchHref = `/${other}/${path ? path + '/' : ''}`;
           {b.name[lang]}
         </a>
       ))}
+      <a class="nav-cta" href={`/${lang}/contact/`} aria-current={current === 'contact' ? 'page' : undefined}>{t.contact}</a>
     </nav>
     <a class="lang-switch" href={switchHref} lang={other} hreflang={other}>{languages[other].label}</a>
   </div>

@@ -17,6 +17,8 @@ const year = new Date().getFullYear();
       </div>
       <div class="footer-links">
         {brands.map((b) => <a href={`/${lang}/${b.slug}/`}>{b.name[lang]}</a>)}
+        <a href={`/${lang}/about/`}>{t.about}</a>
+        <a href={`/${lang}/contact/`}>{t.contact}</a>
       </div>
     </div>
     <div class="copy">© {year} Robot and I. {t.rights}</div>

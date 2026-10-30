@@ -237,3 +237,14 @@ button.btn:disabled { opacity: 0.6; cursor: wait; }
 .prose p { font-size: 1.05rem; }
 .page-title { padding-block: 3rem 0; }
 .page-title h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); }
+
+/* Form note, privacy, 404 */
+.form-note { margin: 0; font-size: 0.85rem; color: var(--gray-600); }
+.form-note a { text-decoration: underline; }
+.policy h2 { margin: 2rem 0 0.4rem; font-size: 1.25rem; }
+.policy p { margin: 0 0 0.7rem; }
+.updated { color: var(--gray-600); font-size: 0.9rem; }
+.notfound { text-align: center; padding-block: 4rem; }
+.notfound h1 { margin: 0 0 0.5rem; }
+.notfound .block { margin-block-end: 2rem; }
+.notfound .btn { margin-inline: 0.4rem; }

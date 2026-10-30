@@ -171,3 +171,69 @@ a { color: inherit; text-decoration: none; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
 .footer-links a:hover { text-decoration: underline; }
 .copy { margin-block-start: 1.5rem; font-size: 0.85rem; color: #9fb0d0; }
+
+/* Header contact button */
+.nav .nav-cta {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.3rem 0.95rem;
+  border-radius: 999px;
+  border-block-end: 0;
+}
+.nav .nav-cta:hover { filter: brightness(1.1); }
+
+/* Services */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.service {
+  border: 1px solid var(--border);
+  border-block-start: 4px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  background: var(--surface);
+}
+.service h3 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+.service p { margin: 0; color: var(--gray-600); }
+
+/* Forms */
+.form-wrap { max-width: 36rem; }
+.form-wrap h2 { margin-block-end: 0.4rem; }
+.form-wrap > p { margin: 0 0 1.2rem; color: var(--gray-600); }
+.form { display: grid; gap: 1rem; }
+.field { display: grid; gap: 0.35rem; font-weight: 600; }
+.field input, .field textarea, .field select {
+  font: inherit;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: 2px solid var(--brand, var(--accent));
+  outline-offset: 1px;
+}
+.hp { position: absolute; inset-inline-start: -9999px; opacity: 0; height: 0; width: 0; }
+button.btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; justify-self: start; }
+button.btn:disabled { opacity: 0.6; cursor: wait; }
+.form-status { margin: 0; min-height: 1.5rem; font-weight: 600; }
+.form-status.ok { color: #15803d; }
+.form-status.err { color: #b91c1c; }
+@media (prefers-color-scheme: dark) {
+  .form-status.ok { color: #4ade80; }
+  .form-status.err { color: #f87171; }
+}
+
+/* CTA band, prose pages */
+.cta-band { background: var(--surface); border-block: 1px solid var(--border); padding-block: 2.5rem; }
+.cta-band h2 { margin: 0 0 0.4rem; }
+.cta-band p { margin: 0 0 1.1rem; color: var(--gray-600); }
+.prose { max-width: 42rem; }
+.prose p { font-size: 1.05rem; }
+.page-title { padding-block: 3rem 0; }
+.page-title h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); }

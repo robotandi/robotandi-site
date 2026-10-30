@@ -23,6 +23,7 @@ const site = Astro.site ?? new URL('https://robotandi.com');
 const suffix = path ? `${path}/` : '';
 const self = new URL(`/${lang}/${suffix}`, site).href;
 const alt = new URL(`/${other}/${suffix}`, site).href;
+const ogImage = new URL('/og-image.png', site).href;
 ---
 <!doctype html>
 <html lang={lang} dir={dir}>
@@ -37,6 +38,14 @@ const alt = new URL(`/${other}/${suffix}`, site).href;
     <link rel="alternate" hreflang="x-default" href={new URL(`/ar/${suffix}`, site).href} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={self} />
+    <meta property="og:site_name" content="Robot and I" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

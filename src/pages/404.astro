@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ui } from '../i18n';
+const ar = ui.ar;
+const en = ui.en;
+---
+<BaseLayout lang="ar" title="404 | Robot and I" description={ar.notFoundText} path="">
+  <section class="container notfound">
+    <div class="block" lang="ar" dir="rtl">
+      <h1>{ar.notFoundTitle}</h1>
+      <p>{ar.notFoundText}</p>
+      <a class="btn" href="/ar/">الرئيسية</a>
+    </div>
+    <div class="block" lang="en" dir="ltr">
+      <h1>{en.notFoundTitle}</h1>
+      <p>{en.notFoundText}</p>
+      <a class="btn" href="/en/">Back to home</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robotandi.com/sitemap-index.xml

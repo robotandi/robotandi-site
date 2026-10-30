@@ -6,4 +6,5 @@ export const FORM_ACCESS_KEY = '5484104a-3359-4ab3-b64a-d781784ebe12';
 
 // 2. Public contact email shown on the Contact page. Leave empty ('') to hide it
 //    until the mailbox exists.
-export const CONTACT_EMAIL = 'sherif@robotandi.com';
+export const CONTACT_EMAIL = 'sherif1@robotandi.com';
+

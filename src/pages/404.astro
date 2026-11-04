@@ -4,17 +4,17 @@ import { ui } from '../i18n';
 const ar = ui.ar;
 const en = ui.en;
 ---
-<BaseLayout lang="ar" title="404 | Robot and I" description={ar.notFoundText} path="">
+<BaseLayout lang="ar" title={`404 | ${ar.siteName}`} description={ar.notFoundText} errorPage>
   <section class="container notfound">
     <div class="block" lang="ar" dir="rtl">
       <h1>{ar.notFoundTitle}</h1>
       <p>{ar.notFoundText}</p>
-      <a class="btn" href="/ar/">الرئيسية</a>
+      <a class="btn" href="/ar/">{ar.backHome}</a>
     </div>
     <div class="block" lang="en" dir="ltr">
       <h1>{en.notFoundTitle}</h1>
       <p>{en.notFoundText}</p>
-      <a class="btn" href="/en/">Back to home</a>
+      <a class="btn" href="/en/">{en.backHome}</a>
     </div>
   </section>
 </BaseLayout>

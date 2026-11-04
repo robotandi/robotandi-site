@@ -21,7 +21,8 @@ export const privacy: Record<Lang, { title: string; intro: string; sections: Pri
       {
         title: 'What we collect',
         body: [
-          'We only collect what you choose to send us through our forms: your name, email address, phone number (optional), your message, the brand or topic you wrote to, and the language of the page you used.',
+          'When you use our forms, we collect what you choose to send us: your name, email address, phone number (optional), your message, the brand or topic you wrote to, and the language of the page you used.',
+          'When you visit any page, our service providers process technical data such as your IP address. See "Who processes it for us" below.',
           'We do not ask for payment details or passwords on this website.',
         ],
       },
@@ -70,7 +71,8 @@ export const privacy: Record<Lang, { title: string; intro: string; sections: Pri
       {
         title: 'ما الذي نجمعه',
         body: [
-          'لا نجمع إلا ما تختار إرساله لنا عبر النماذج: اسمك وبريدك الإلكتروني ورقم هاتفك (اختياري) ورسالتك والعلامة أو الموضوع الذي راسلتنا بشأنه ولغة الصفحة التي استخدمتها.',
+          'عند استخدامك للنماذج، نجمع ما تختار إرساله لنا: اسمك وبريدك الإلكتروني ورقم هاتفك (اختياري) ورسالتك والعلامة أو الموضوع الذي راسلتنا بشأنه ولغة الصفحة التي استخدمتها.',
+          'عند زيارتك لأي صفحة، يعالج مزوّدو الخدمة لدينا بيانات تقنية مثل عنوان IP. راجع قسم «من يعالجها نيابةً عنا» أدناه.',
           'لا نطلب بيانات الدفع أو كلمات المرور على هذا الموقع.',
         ],
       },

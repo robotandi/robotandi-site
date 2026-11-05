@@ -2,6 +2,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+const defaultLocale = 'ar';
+const locales = ['ar', 'en'];
+
 export default defineConfig({
   site: 'https://robotandi.com',
   redirects: {
@@ -9,16 +12,15 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
       i18n: {
-        defaultLocale: 'ar',
-        locales: { ar: 'ar', en: 'en' },
+        defaultLocale,
+        locales: Object.fromEntries(locales.map((locale) => [locale, locale])),
       },
     }),
   ],
   i18n: {
-    defaultLocale: 'ar',
-    locales: ['ar', 'en'],
+    defaultLocale,
+    locales,
     routing: { prefixDefaultLocale: true },
   },
 });

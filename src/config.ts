@@ -1,4 +1,4 @@
-// Site-wide settings. Edit these two values before launch.
+// Site-wide settings.
 
 // 1. Get a free access key at https://web3forms.com (enter the email that should receive messages).
 //    The key is meant to be public: it only lets visitors send forms to that inbox.

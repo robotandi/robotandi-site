@@ -2,7 +2,12 @@
 export type Lang = 'ar' | 'en';
 export type FormKind = 'quote' | 'contact' | 'waitlist' | 'follow';
 
-export interface Service { title: string; text: string }
+export interface Service {
+  title: string;
+  text: string;
+  /** Academy subject page under /[lang]/academy/ */
+  subject?: string;
+}
 
 export interface Brand {
   slug: string;
@@ -14,10 +19,10 @@ export interface Brand {
   form: FormKind;
 }
 
-// helper: s([[titleEn, textEn], ...], [[titleAr, textAr], ...])
-const s = (en: [string, string][], ar: [string, string][]) => ({
-  en: en.map(([title, text]) => ({ title, text })),
-  ar: ar.map(([title, text]) => ({ title, text })),
+// helper: s([[titleEn, textEn, subject?], ...], [[titleAr, textAr, subject?], ...])
+const s = (en: [string, string, string?][], ar: [string, string, string?][]) => ({
+  en: en.map(([title, text, subject]) => ({ title, text, subject })),
+  ar: ar.map(([title, text, subject]) => ({ title, text, subject })),
 });
 
 export const brands: Brand[] = [
@@ -32,18 +37,18 @@ export const brands: Brand[] = [
     },
     services: s(
       [
-        ['Robotics', 'Build and program robots, from basic mechanisms to sensors and control.'],
-        ['Programming', 'Learn to write code and build real applications.'],
-        ['Artificial Intelligence', 'Understand how AI works and how to use it in practice.'],
-        ['Electronics', 'Circuits, components and microcontrollers made clear.'],
-        ['STEM', 'Science, technology, engineering and math through projects.'],
+        ['Robotics', 'Build and program robots, from basic mechanisms to sensors and control.', 'robotics'],
+        ['Programming', 'Learn to write code and build real applications.', 'programming'],
+        ['Artificial Intelligence', 'Understand how AI works and how to use it in practice.', 'artificial-intelligence'],
+        ['Electronics', 'Circuits, components and microcontrollers made clear.', 'electronics'],
+        ['STEM', 'Science, technology, engineering and math through projects.', 'stem'],
       ],
       [
-        ['الروبوتات', 'ابنِ روبوتات وبرمجها، من الآليات الأساسية إلى الحسّاسات والتحكم.'],
-        ['البرمجة', 'تعلّم كتابة الأكواد وبناء تطبيقات حقيقية.'],
-        ['الذكاء الاصطناعي', 'افهم كيف يعمل الذكاء الاصطناعي وكيف تستخدمه عملياً.'],
-        ['الإلكترونيات', 'الدوائر والمكوّنات والمتحكّمات الدقيقة بشكل مبسّط.'],
-        ['علوم STEM', 'العلوم والتكنولوجيا والهندسة والرياضيات من خلال المشاريع.'],
+        ['الروبوتات', 'ابنِ روبوتات وبرمجها، من الآليات الأساسية إلى الحسّاسات والتحكم.', 'robotics'],
+        ['البرمجة', 'تعلّم كتابة الأكواد وبناء تطبيقات حقيقية.', 'programming'],
+        ['الذكاء الاصطناعي', 'افهم كيف يعمل الذكاء الاصطناعي وكيف تستخدمه عملياً.', 'artificial-intelligence'],
+        ['الإلكترونيات', 'الدوائر والمكوّنات والمتحكّمات الدقيقة بشكل مبسّط.', 'electronics'],
+        ['علوم STEM', 'العلوم والتكنولوجيا والهندسة والرياضيات من خلال المشاريع.', 'stem'],
       ],
     ),
     form: 'waitlist',

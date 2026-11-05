@@ -238,6 +238,68 @@ button.btn:disabled { opacity: 0.6; cursor: wait; }
 .page-title { padding-block: 3rem 0; }
 .page-title h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.6rem); }
 
+/* Academy curriculum */
+.curriculum-link { margin: 1.5rem 0 0; }
+.curriculum-notice {
+  margin: 0 0 2rem;
+  padding: 0.8rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-inline-start: 6px solid var(--brand);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.fact-list { margin: 0; padding-inline-start: 1.25rem; }
+.fact-list li { margin-block-end: 0.3rem; }
+.section h2.session-title { margin-block-start: 2.25rem; }
+.session-plan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.session-plan li {
+  flex-basis: 8.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-block-start: 4px solid var(--brand);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+}
+.session-plan strong { display: block; font-size: 1.3rem; line-height: 1.2; }
+.session-plan span { color: var(--gray-600); font-size: 0.95rem; }
+.track { border-block-start: 1px solid var(--border); }
+.track-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.section .track-head h2 { margin: 0; }
+.track-ages { font-weight: 600; color: var(--gray-600); }
+.track-head .badge { margin: 0; font-size: 0.85rem; }
+.track-summary { margin: 0.6rem 0 1.5rem; max-width: 42rem; }
+.levels-label { margin: 0 0 0.7rem; font-size: 1.1rem; }
+.week-plan { margin-block-start: 0.8rem; }
+.week-plan summary { cursor: pointer; font-weight: 700; }
+.week-plan ol { margin: 0.6rem 0 0; padding-inline-start: 1.5rem; }
+
+/* Academy subjects */
+.service-link { display: block; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.service-link:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12); }
+.service-link .track-ages { margin-block-end: 0.3rem; }
+.placement-levels { margin-block-start: 0.5rem; }
+.hero-back {
+  display: inline-block;
+  margin-block-end: 0.8rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.subject-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem 2.5rem;
+}
+.subject-note { margin: 1.5rem 0 0; font-weight: 600; }
+.subject-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
 /* Form note, privacy, 404 */
 .form-note { margin: 0; font-size: 0.85rem; color: var(--gray-600); }
 .form-note a, .policy a { text-decoration: underline; }

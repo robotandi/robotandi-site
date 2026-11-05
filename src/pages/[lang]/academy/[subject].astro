@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { brands } from '../../../data/brands';
+import type { Lang } from '../../../data/brands';
+import { subjects, subjectText } from '../../../data/academySubjects';
+import { curriculumText, tracks } from '../../../data/curriculum';
+import { ui } from '../../../i18n';
+
+export function getStaticPaths() {
+  return ['ar', 'en'].flatMap((lang) =>
+    subjects.map((subject) => ({ params: { lang, subject: subject.slug }, props: { subject } })),
+  );
+}
+const lang = Astro.params.lang as Lang;
+const { subject } = Astro.props;
+const t = subjectText[lang];
+const c = curriculumText[lang];
+const academy = brands.find((b) => b.slug === 'academy')!;
+const others = subjects.filter((s) => s.slug !== subject.slug);
+const placements = subject.placements.map((placement) => {
+  const track = tracks.find((tr) => tr.id === placement.track);
+  if (!track) throw new Error(`Unknown track "${placement.track}" in subject "${subject.slug}"`);
+  const levels = placement.levels.map((index) => {
+    const level = track.levels[index];
+    if (!level) throw new Error(`Unknown level ${index} in track "${track.id}"`);
+    return level.name[lang];
+  });
+  return { track, levels, text: placement.text[lang] };
+});
+---
+<BaseLayout
+  lang={lang}
+  title={`${subject.name[lang]} | ${academy.title[lang]}`}
+  description={subject.intro[lang]}
+  current="academy"
+  accent={academy.accent}
+  path={`academy/${subject.slug}`}
+>
+  <section class="brand-hero">
+    <div class="container">
+      <a class="hero-back" href={`/${lang}/academy/`}>{t.backToAcademy}</a>
+      <h1>{subject.name[lang]}</h1>
+      <p>{subject.intro[lang]}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="curriculum-notice">{c.notice}</p>
+      <div class="subject-columns">
+        <div>
+          <h2>{t.learnTitle}</h2>
+          <ul class="fact-list">
+            {subject.learn[lang].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h2>{t.projectsTitle}</h2>
+          <ul class="fact-list">
+            {subject.projects[lang].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+      {subject.note && <p class="subject-note">{subject.note[lang]}</p>}
+    </div>
+  </section>
+
+  <section class="section track">
+    <div class="container">
+      <h2>{t.placementsTitle}</h2>
+      <div class="services">
+        {placements.map(({ track, levels, text }) => (
+          <a class="service service-link" href={`/${lang}/academy/curriculum/#${track.id}`}>
+            <h3><span lang="en" dir="ltr">{track.name.en}</span></h3>
+            <p class="track-ages">{track.ages[lang]}</p>
+            <p>{text}</p>
+            <ul class="fact-list placement-levels">
+              {levels.map((level) => <li>{level}</li>)}
+            </ul>
+          </a>
+        ))}
+      </div>
+      <p class="curriculum-link"><a class="btn" href={`/${lang}/academy/curriculum/`}>{t.curriculumLink}</a></p>
+    </div>
+  </section>
+
+  <section class="section track">
+    <div class="container">
+      <h2>{t.otherTitle}</h2>
+      <div class="subject-links">
+        {others.map((other) => (
+          <a class="btn outline" href={`/${lang}/academy/${other.slug}/`}>{other.name[lang]}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>{c.ctaTitle}</h2>
+      <p>{c.ctaText}</p>
+      <a class="btn" href={`/${lang}/academy/#form`}>{c.ctaButton}</a>
+    </div>
+  </section>
+</BaseLayout>

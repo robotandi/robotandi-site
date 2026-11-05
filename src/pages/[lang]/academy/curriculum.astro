@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { brands } from '../../../data/brands';
+import type { Lang } from '../../../data/brands';
+import { courseFacts, curriculumText, sessionPlan, tracks } from '../../../data/curriculum';
+import { ui } from '../../../i18n';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'ar' } }, { params: { lang: 'en' } }];
+}
+const lang = Astro.params.lang as Lang;
+const t = curriculumText[lang];
+const academy = brands.find((b) => b.slug === 'academy')!;
+---
+<BaseLayout
+  lang={lang}
+  title={`${t.title} | ${ui[lang].siteName}`}
+  description={t.description}
+  current="academy"
+  accent={academy.accent}
+  path="academy/curriculum"
+>
+  <section class="brand-hero">
+    <div class="container">
+      <h1>{t.title}</h1>
+      <p>{t.description}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="curriculum-notice">{t.notice}</p>
+      <h2>{t.howTitle}</h2>
+      <ul class="fact-list">
+        {courseFacts[lang].map((fact) => <li>{fact}</li>)}
+      </ul>
+      <h2 class="session-title">{t.sessionTitle}</h2>
+      <ol class="session-plan">
+        {sessionPlan[lang].map((step) => (
+          <li style={`flex-grow:${step.minutes}`}>
+            <strong>{step.minutes}</strong>
+            <span>{step.title}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {tracks.map((track) => (
+    <section class="section track" id={track.id}>
+      <div class="container">
+        <div class="track-head">
+          <h2 lang="en" dir="ltr">{track.name.en}</h2>
+          <span class="track-ages">{track.ages[lang]}</span>
+          <span class="badge">{track.status[lang]}</span>
+        </div>
+        <p class="track-summary">{track.summary[lang]}</p>
+        <h3 class="levels-label">{t.levelsLabel}</h3>
+        <div class="services">
+          {track.levels.map((level) => (
+            <div class="service">
+              <h3>{level.name[lang]}</h3>
+              <p>{level.focus[lang]}</p>
+              {level.weeks && (
+                <details class="week-plan">
+                  <summary>{t.weeksLabel}</summary>
+                  <ol>
+                    {level.weeks[lang].map((week) => <li>{week}</li>)}
+                  </ol>
+                </details>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>{t.ctaTitle}</h2>
+      <p>{t.ctaText}</p>
+      <a class="btn" href={`/${lang}/academy/#form`}>{t.ctaButton}</a>
+    </div>
+  </section>
+</BaseLayout>
